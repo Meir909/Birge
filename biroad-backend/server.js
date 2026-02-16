@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 
+// Initialize Express app and Socket.IO server
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -13,11 +14,24 @@ const io = socketIo(server, {
   }
 });
 
+// Middleware setup
 app.use(cors());
 app.use(express.json());
+app.use(express.static('../biroad-front'));
 
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'BIRoad backend is running!', timestamp: new Date().toISOString() });
+  res.json({ status: 'BIRoad backend is running! ', timestamp: new Date().toISOString() });
+});
+
+// Serve login page as default
+app.get('/', (req, res) => {
+  res.sendFile(require('path').join(__dirname, '../biroad-front/login.html'));
+});
+
+// Serve dashboard
+app.get('/dashboard.html', (req, res) => {
+  res.sendFile(require('path').join(__dirname, '../biroad-front/dashboard.html'));
 });
 
 app.use('/api/auth', require('./src/routes/auth'));
@@ -47,6 +61,6 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 3002;
 server.listen(PORT, () => {
-  console.log(`BIRoad backend running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
+  console.log(`🚀 BIRoad backend running on port ${PORT}`);
+  console.log(`💚 Health check: http://localhost:${PORT}/api/health`);
 });
