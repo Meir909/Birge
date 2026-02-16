@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  # MongoDB база данных
+  mongodb:
+    image: mongo:6.0
+    container_name: biroad-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: biroad
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - biroad-network
+
+  # Redis для кэширования и сессий
+  redis:
+    image: redis:7-alpine
+    container_name: biroad-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - biroad-network
+
+  # Основное приложение
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: biroad-app
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      CLIENT_URL: http://localhost:3000
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/biroad?authSource=admin
+      REDIS_URL: redis://:redis123@redis:6379
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production
+      BCRYPT_ROUNDS: 12
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - biroad-network
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Nginx для статических файлов и SSL терминирования
+  nginx:
+    image: nginx:alpine
+    container_name: biroad-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ../biroad-front:/var/www/html:ro
+      - ./uploads:/var/www/uploads:ro
+    depends_on:
+      - app
+    networks:
+      - biroad-network
+
+  # Мониторинг с Prometheus (опционально)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: biroad-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - biroad-network
+
+  # Grafana для визуализации (опционально)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: biroad-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - biroad-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  biroad-network:
+    driver: bridge

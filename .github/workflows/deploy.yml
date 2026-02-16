@@ -1,0 +1,229 @@
+name: 🚀 Deploy BIRoad
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '18'
+  
+jobs:
+  # Тестирование
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          npm ci
+          cd server && npm ci
+          
+      - name: 🔍 Run tests
+        run: |
+          cd server && npm test
+          
+      - name: 🔍 Lint code
+        run: |
+          cd server && npm run lint
+
+  # Деплой фронтенда на Vercel
+  deploy-frontend:
+    name: 🎨 Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          cd biroad-front
+          npm ci
+          
+      - name: 🔨 Build frontend
+        run: |
+          cd biroad-front
+          npm run build
+          
+      - name: 🚀 Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./biroad-front
+          vercel-args: '--prod'
+
+  # Деплой бэкенда на Railway
+  deploy-backend:
+    name: 🔧 Deploy Backend
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          cd server
+          npm ci --production
+          
+      - name: 🔨 Build backend
+        run: |
+          cd server
+          npm run build
+          
+      - name: 🚀 Deploy to Railway
+        uses: railway-app/railway-action@v1
+        with:
+          api-token: ${{ secrets.RAILWAY_TOKEN }}
+          service: ${{ secrets.RAILWAY_SERVICE_ID }}
+          working-directory: ./server
+
+  # Деплой документации
+  deploy-docs:
+    name: 📚 Deploy Docs
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+
+  # Уведомление о деплое
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    needs: [deploy-frontend, deploy-backend]
+    if: always()
+    
+    steps:
+      - name: 📢 Send notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          text: |
+            🚀 BIRoad Deployment Status: ${{ job.status }}
+            
+            Frontend: https://biroad.vercel.app
+            Backend: https://biroad-backend.railway.app
+            
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+  # Health check после деплоя
+  health-check:
+    name: 🔍 Health Check
+    runs-on: ubuntu-latest
+    needs: [deploy-frontend, deploy-backend]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 🔍 Check API Health
+        run: |
+          sleep 30 # Ждем запуска
+          
+          # Проверка API
+          API_URL="https://biroad-backend.railway.app"
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$API_URL/api/health")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ API Health Check Passed"
+          else
+            echo "❌ API Health Check Failed: $response"
+            exit 1
+          fi
+          
+          # Проверка фронтенда
+          FRONTEND_URL="https://biroad.vercel.app"
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ Frontend Health Check Passed"
+          else
+            echo "❌ Frontend Health Check Failed: $response"
+            exit 1
+          fi
+
+  # Создание релиза
+  release:
+    name: 🏷️ Create Release
+    runs-on: ubuntu-latest
+    needs: [health-check]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🏷️ Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: 🚀 BIRoad v${{ github.run_number }}
+          body: |
+            ## 🚀 Новое обновление BIRoad
+            
+            ### ✨ Что нового:
+            - Автоматический деплой на Vercel + Railway
+            - Health checks и мониторинг
+            - Улучшенная безопасность
+            - Оптимизированная производительность
+            
+            ### 🔗 Ссылки:
+            - 🎨 Фронтенд: https://biroad.vercel.app
+            - 🔧 Бэкенд: https://biroad-backend.railway.app
+            - 📚 Документация: https://docs.biroad.vercel.app
+            
+            ### 📦 Изменения:
+            - Commit: ${{ github.sha }}
+            - Автор: ${{ github.actor }}
+            
+            ---
+            🤖 Автоматический релиз от GitHub Actions
+          draft: false
+          prerelease: false

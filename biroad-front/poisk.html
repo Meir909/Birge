@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BIRoad | Find Your Carpool</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="js/main.js"></script>
+<script src="js/search.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f5f8fc",
+                        "background-dark": "#0f172a",
+                        "neutral-border": "#e7ebf3",
+                        "neutral-text": "#4d6599",
+                        "text-main": "#0e121b",
+                        "text-muted": "#64748b"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-slate-100 antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark px-6 py-3 shrink-0 z-30">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<h2 class="dark:text-white text-xl font-extrabold leading-tight tracking-tight text-text-main">BIRoad</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors text-text-main">Поиск групп</a>
+<a class="dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors text-text-main">Мои поездки</a>
+<a class="dark:text-slate-400 text-sm font-semibold hover:text-primary transition-colors text-text-main">Сообщения</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary/20 bg-cover bg-center" data-alt="User profile avatar smiling woman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwumV5ImCxKUCK1WHaJ4p8RXXx7xFr8ZnT8jJMv8NWgFxc2m5p-FAqjRPmiNEiSjc1mihUpVdtHGt1vtQEu6ZLSknG_GTuq_7XGHK8x_6CBTOOTEA74Xl9y6QUxGAT7-pxGVgoGgwD2vl3YLb0Cmkq1-TjObiEusnK0BpiaQ-HAuMeX2GMXk5Paxq-biZnHfbdc8h5sAGXvx2uZBZR_QPBJho9vy7xfHYWEcF9oGPIjI7Dxxk-AfGiTH5U9u2KS-TN3xEBrl6tRRg')"></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Sidebar Filters & Results -->
+<aside class="w-full md:w-[400px] lg:w-[450px] bg-white dark:bg-background-dark border-r border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden">
+<!-- Filters Header -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 space-y-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-background-light/50 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm py-3 text-base search-input" placeholder="Поиск школы или района..." type="text"/>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1">
+<button class="px-4 py-1.5 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold whitespace-nowrap filter-btn btn-hover" data-filter="school">Школа: Академия Хайтс</button>
+<button class="px-4 py-1.5 bg-background-light/50 dark:bg-background-dark text-neutral-text dark:text-slate-400 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1 filter-btn btn-hover" data-filter="class">Класс: Все <span class="material-symbols-outlined text-xs">expand_more</span></button>
+<button class="px-4 py-1.5 bg-background-light/50 dark:bg-background-dark text-neutral-text dark:text-slate-400 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1 filter-btn btn-hover" data-filter="time">Время: 7-8 утра <span class="material-symbols-outlined text-xs">expand_more</span></button>
+</div>
+</div>
+<!-- Scrollable Results -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-background-dark/50">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-bold dark:text-white text-lg text-text-main">Рекомендуемые группы</h3>
+<span class="text-xs font-semibold text-slate-500">Найдено 12 совпадений</span>
+</div>
+<!-- Group Card 1 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary/50 transition-all cursor-pointer group card-hover fade-in">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" data-alt="Driver profile photo man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBO17TJeYGfAfAsa2ay6r4eoZWRY5i8JE-93UpnSVWWkOEgFdFQBu3fFWNzJbPm5x_YGHsTRAMxcRxb9XIDQkPqHHTvoJlGkFRzgaGA738B4KH4k03frR4SYr8LIjQqabamqF3w4TiNAeTL7K93SrCDdRxQggHjQ-0u4ekGbRYBtnRf7z3X75uQ0IGGCPwh6KjVWWRaUmwjQyzcOeqcUHBI8LEfTyh05pLXwhkd3SAOUognQzATr-FPLq1PKWlFKhTb5KxKQdCcOYY')"></div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-[10px] font-bold text-white px-1.5 rounded-full border-2 border-white dark:border-slate-800" style="background-color: #2463eb;">4.9 ★</div>
+</div>
+<div>
+<h4 class="font-bold dark:text-white text-base text-navy-dark">Westside Express</h4>
+<p class="text-slate-500 text-sm">Водитель: Дэвид Миллер</p>
+</div>
+</div>
+<div class="bg-primary/10 text-primary text-[10px] font-extrabold px-2 py-1 rounded-md">98% СОВПАДЕНИЕ</div>
+</div>
+<div class="space-y-2 mb-4">
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">schedule</span>
+<span class="text-sm font-medium">Выезд в 07:15</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">school</span>
+<span class="text-sm font-medium">Академия Хайтс (K-5 классы)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-700">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="material-symbols-outlined text-slate-200 dark:text-slate-600 text-lg">event_seat</span>
+<span class="text-[10px] font-bold self-center ml-1 text-slate-400">2 места осталось</span>
+</div>
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-lg hover:brightness-110 transition-all px-6 py-2.5 text-sm join-btn btn-hover" data-group="westside-express">Присоединиться</button>
+</div>
+</div>
+<!-- Group Card 2 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary/50 transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" data-alt="Driver profile photo woman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGnaQinD-uzJE6hNCY5vnyhPDMBCZdqqrUt9OOCeEaFaY2TOq72BuAsmHgmoa-iXCIttc2DCjk06lhjQUWUb2yTFc4PNuPZnUsVED_eQvlKJom2YTH-HFu9kKPoWogP3PDKFMVo-4hq0O1ER2XlgJSaPZnLLTNPl8UxcTNWAyCy_LuxPS0hbVmU0lSe1mKNMV15NTcsrEGhERweNozFzVaB-qqvqtolF9gqvJr5iI3yp2LE5pn0nqgv1W_jXyslTYlqLmIltO9gpo')"></div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-[10px] font-bold text-white px-1.5 rounded-full border-2 border-white dark:border-slate-800" style="background-color: #2463eb;">4.8 ★</div>
+</div>
+<div>
+<h4 class="font-bold dark:text-white text-base text-navy-dark">Morning Commuters</h4>
+<p class="text-slate-500 text-sm">Водитель: Сара Чен</p>
+</div>
+</div>
+<div class="bg-primary/10 text-primary text-[10px] font-extrabold px-2 py-1 rounded-md">92% СОВПАДЕНИЕ</div>
+</div>
+<div class="space-y-2 mb-4">
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">schedule</span>
+<span class="text-sm font-medium">Выезд в 07:45</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">school</span>
+<span class="text-sm font-medium">Академия Хайтс (6-12 классы)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-700">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="material-symbols-outlined text-slate-200 dark:text-slate-600 text-lg">event_seat</span>
+<span class="material-symbols-outlined text-slate-200 dark:text-slate-600 text-lg">event_seat</span>
+<span class="text-[10px] font-bold self-center ml-1 text-slate-400">1 место осталось</span>
+</div>
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-lg hover:brightness-110 transition-all px-6 py-2.5 text-sm join-btn btn-hover" data-group="westside-express">Присоединиться</button>
+</div>
+</div>
+<!-- Group Card 3 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary/50 transition-all cursor-pointer opacity-80">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" data-alt="Driver profile photo man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0QoYQucw0Uld0Z9V8khRsDbF1N1C0rzma_8oCRypZThmoTjtVgyb7SXbfhHOHgJmltcITwsYA9Kb6EHKD_ZA98LTeMVkl_JB7_VI1Ylzr6gNGHjRG07j2fn5v4Rvh4zi_lz_TA57jyW33_EhFkHvaj567uzlcCqYHeynvaRZwB3oJrf41Ky23bnzjhIvpvSSrceYpWbFgs_al6mAj3hwDTOEfofrCIGr2EAoz3rZ21qKVg5uZ_CihKwYP6tTme4YQULGs8h7D9K0')"></div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-[10px] font-bold text-white px-1.5 rounded-full border-2 border-white dark:border-slate-800" style="background-color: #2463eb;">5.0 ★</div>
+</div>
+<div>
+<h4 class="font-bold dark:text-white text-base text-navy-dark">Valley Route Kids</h4>
+<p class="text-slate-500 text-sm">Водитель: Марк Уилсон</p>
+</div>
+</div>
+<div class="bg-slate-100 text-neutral-text text-[10px] font-extrabold px-2 py-1 rounded-md uppercase">85% СОВПАДЕНИЕ</div>
+</div>
+<div class="space-y-2 mb-4">
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">schedule</span>
+<span class="text-sm font-medium">Выезд в 08:00</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm text-slate-400 font-medium">school</span>
+<span class="text-sm font-medium">Академия Хайтс (Все классы)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-700">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="material-symbols-outlined text-primary text-lg">event_seat</span>
+<span class="text-[10px] font-bold self-center ml-1 text-slate-400">3 места осталось</span>
+</div>
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-lg hover:brightness-110 transition-all px-6 py-2.5 text-sm join-btn btn-hover" data-group="westside-express">Присоединиться</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Map Section -->
+<section class="flex-1 relative bg-slate-200 dark:bg-slate-900">
+<!-- Map Placeholder Gradient -->
+<div class="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" data-alt="Abstract map grid visualization" data-location="San Francisco" style="background-image: radial-gradient(circle at 2px 2px, rgba(36, 99, 235, 0.05) 1px, transparent 0); background-size: 24px 24px;">
+<!-- Mock Map Pin 1 (Active) -->
+<div class="absolute top-1/4 left-1/3 group cursor-pointer">
+<div class="bg-primary text-white p-2 rounded-full shadow-lg ring-4 ring-primary/20 animate-pulse" style="background-color: #2463eb;">
+<span class="material-symbols-outlined block">person_pin_circle</span>
+</div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white dark:bg-slate-800 p-2 rounded-lg shadow-xl whitespace-nowrap hidden group-hover:block border border-slate-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-900 dark:text-white">Westside Express (98%)</p>
+<p class="text-[10px] text-primary" style="color: #2463eb;">Выезд через 15 мин</p>
+</div>
+</div>
+<!-- Mock Map Pin 2 -->
+<div class="absolute top-1/2 left-2/3 group cursor-pointer">
+<div class="bg-white dark:bg-slate-800 text-primary p-2 rounded-full shadow-lg border border-primary/50" style="color: #2463eb;">
+<span class="material-symbols-outlined block">person_pin_circle</span>
+</div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white dark:bg-slate-800 p-2 rounded-lg shadow-xl whitespace-nowrap hidden group-hover:block border border-slate-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-900 dark:text-white">Westside Express (98%)</p>
+</div>
+</div>
+<!-- Mock Map Pin 3 -->
+<div class="absolute bottom-1/4 left-1/2 group cursor-pointer">
+<div class="bg-white dark:bg-slate-800 text-primary p-2 rounded-full shadow-lg border border-primary/50" style="color: #2463eb;">
+<span class="material-symbols-outlined block">person_pin_circle</span>
+</div>
+</div>
+<!-- School Marker -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="dark:bg-white text-white dark:text-slate-900 px-3 py-1.5 rounded-full shadow-2xl flex items-center gap-2 px-5 py-2">
+<span class="material-symbols-outlined text-sm">school</span>
+<span class="font-bold text-sm">Академия Хайтс</span>
+</div>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute right-6 bottom-6 flex flex-col gap-2">
+<button class="bg-white dark:bg-slate-800 rounded-lg shadow-lg text-slate-600 dark:text-white hover:text-primary transition-colors p-3">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="bg-white dark:bg-slate-800 rounded-lg shadow-lg text-slate-600 dark:text-white hover:text-primary transition-colors p-3">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<div class="h-4"></div>
+<button class="bg-white dark:bg-slate-800 rounded-lg shadow-lg text-slate-600 dark:text-white hover:text-primary transition-colors p-3">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- View Toggle (Floating) -->
+<div class="absolute top-6 left-6 md:hidden">
+<button class="bg-slate-900 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm font-bold"><span class="material-symbols-outlined text-sm">list</span> Показать список</button>
+</div>
+</section>
+</main>
+<!-- Side Overlays (Hidden by default, used for Filter Sidebar) -->
+<div class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+<div class="fixed right-0 top-0 bottom-0 w-80 bg-white dark:bg-background-dark shadow-2xl z-50 transform translate-x-full hidden">
+<div class="p-6 h-full flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-xl font-bold">Filters</h2>
+<button class="material-symbols-outlined">close</button>
+</div>
+<div class="space-y-6 flex-1 overflow-y-auto">
+<div>
+<label class="block text-sm font-bold mb-3 text-navy-dark">School Name</label>
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm">
+<option>Heights Academy</option>
+<option>Northside High</option>
+<option>River Elementary</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold mb-3 text-navy-dark">Grade Level</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="p-2 border border-primary bg-primary/10 text-primary rounded-lg text-xs font-bold" style="color: #2463eb;">K-5</button>
+<button class="p-2 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold">6-8</button>
+<button class="p-2 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold">9-12</button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<label class="block text-sm font-bold text-navy-dark">Departure Time</label>
+<span class="text-xs text-primary font-bold" style="color: #2463eb;">07:00 - 08:30</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer" type="range"/>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-xl font-bold mt-6 shadow-lg shadow-primary/20" style="background-color: #2463eb;">Apply Filters</button>
+</div>
+</div>
+</body></html>

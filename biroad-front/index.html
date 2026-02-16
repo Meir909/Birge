@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BIRoad | Безопасные и экологичные школьные поездки</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="css/animations.css" rel="stylesheet"/>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/apiService.js"></script>
+<script src="js/mapService.js"></script>
+<script src="js/aiService.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f5f8fc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark antialiased text-slate-900">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md dark:bg-background-dark/80 dark:border-[#1a3321] border-blue-100">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-[#0d1c12]" style="background-color: #2463eb;">
+<span class="material-symbols-outlined font-bold">directions_car</span>
+</div>
+<span class="text-xl font-800 tracking-tight dark:text-white text-blue-950">BIRoad</span>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors dark:text-gray-300 font-bold" href="#features">Возможности</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors dark:text-gray-300 font-bold" href="#impact">Эко-влияние</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors dark:text-gray-300 font-bold" href="#about">О нас</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="hidden sm:block px-4 py-2 text-sm font-bold text-[#0d1c12] hover:bg-primary/10 rounded-lg transition-all dark:text-white login-btn">Войти</button>
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg text-base font-800 transition-all shadow-md register-btn" style="background-color: #2463eb;">Регистрация</button>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-20 lg:py-32">
+<div class="mx-auto max-w-7xl px-6 lg:flex lg:items-center lg:gap-16">
+<div class="flex-1 text-left">
+<div class="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-bold mb-6 text-primary" style="color: #2463eb;"><span class="material-symbols-outlined text-sm">eco</span> Передовые экологичные поездки в школу</div>
+<h1 class="text-5xl font-800 leading-[1.1] tracking-tight dark:text-white lg:text-7xl text-blue-950">Безопасные и <span class="text-primary" style="color: #2463eb;">экологичные</span> поездки в школу.</h1>
+<p class="mt-6 text-lg leading-relaxed dark:text-gray-400 max-w-xl font-medium text-slate-600">Присоединяйтесь к умной революции совместных поездок ради зеленого будущего. Станьте частью сообщества родителей, делающих поездки в школу безопаснее, чище и удобнее.</p>
+<div class="mt-10 flex flex-wrap gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg text-xl font-800 transition-all shadow-xl shadow-primary/30" style="background-color: #2463eb;">Начать</button>
+<button class="flex items-center gap-2 border border-[#cee8d7] bg-white px-8 py-4 text-lg font-700 hover:bg-gray-50 transition-all dark:bg-transparent dark:text-white dark:border-gray-700"><span class="material-symbols-outlined">play_circle</span> Как это работает</button>
+</div>
+</div>
+<div class="mt-16 flex-1 lg:mt-0">
+<div class="relative">
+<div class="absolute -left-4 -top-4 h-72 w-72 rounded-full bg-primary/20 blur-3xl"></div>
+<div class="relative overflow-hidden border-8 border-white shadow-2xl dark:border-[#1a3321]">
+<img class="h-[500px] w-full object-cover" data-alt="Happy parents and kids carpooling to school" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQR0ej1B6xjRGkUU5j08k93mP_SHoeR-EKJmR8fj3GtVDUcSJ7IhomZscZ9hsJezur6kcTKLg3j4r_GeGsDvq5LHYqC1cmRJhmAyMcdyXHNJgpGA2Mr4bxwQOp_XiF6DLyXF1_1uJIsO79hWGIaCzjWFTVyhfcZw8JmTxe7E5G1Mn6uKuyU67s4TPw3_BApPW6lDcxUEKIqETBrQGk__gqED7LJbRS_AQX_QDLyM1EKLz0U5SFa7rxmihOBO8zZKOzfylhp3E69Z8"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="bg-white py-12 dark:bg-background-dark/50">
+<div class="mx-auto max-w-7xl px-6">
+<p class="text-center text-sm font-bold uppercase tracking-widest text-gray-400 mb-8 text-slate-600">Нам доверяют семьи в этих округах</p>
+<div class="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="text-xl font-800 dark:text-white text-blue-950">OAKWOOD ACADEMY</div>
+<div class="text-xl font-800 dark:text-white text-blue-950">RIVERSIDE PREP</div>
+<div class="text-xl font-800 dark:text-white text-blue-950">GREENVALLEY HIGH</div>
+<div class="text-xl font-800 dark:text-white text-blue-950">PINE HILLS PRIMARY</div>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="py-24 dark:bg-background-dark bg-blue-50/30" id="features">
+<div class="mx-auto max-w-7xl px-6">
+<div class="mb-16 text-center">
+<h2 class="text-3xl font-800 tracking-tight dark:text-white sm:text-4xl text-blue-950">Как это работает</h2>
+<p class="mt-4 text-lg dark:text-gray-400 font-medium text-slate-600">Три простых шага, чтобы начать вашу экологичную поездку в школу.</p>
+</div>
+<div class="grid gap-8 md:grid-cols-3">
+<div class="group relative flex flex-col items-center border border-[#cee8d7] bg-white p-10 text-center transition-all hover:shadow-xl dark:bg-background-dark/30 dark:border-gray-800 border-blue-100">
+<div class="mb-6 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white" style="color: #2463eb;">
+<span class="material-symbols-outlined text-3xl font-bold">person_add</span>
+</div>
+<h3 class="text-xl font-800 dark:text-white text-blue-950">Регистрация</h3>
+<p class="mt-4 dark:text-gray-400 leading-relaxed font-medium text-slate-600">Создайте верифицированный профиль для вашей семьи и школьного округа с помощью нашего процесса безопасной проверки.</p>
+<div class="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#f0f9f2] text-sm font-bold text-primary" style="color: #2463eb;">1</div>
+</div>
+<div class="group relative flex flex-col items-center border border-[#cee8d7] bg-white p-10 text-center transition-all hover:shadow-xl dark:bg-background-dark/30 dark:border-gray-800 border-blue-100">
+<div class="mb-6 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white" style="color: #2463eb;">
+<span class="material-symbols-outlined text-3xl font-bold">diversity_3</span>
+</div>
+<h3 class="text-xl font-800 dark:text-white text-blue-950">Подбор</h3>
+<p class="mt-4 dark:text-gray-400 leading-relaxed font-medium text-slate-600">Наш умный алгоритм подберет вам надежных соседей по вашему конкретному школьному маршруту для максимальной эффективности.</p>
+<div class="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#f0f9f2] text-sm font-bold text-primary" style="color: #2463eb;">2</div>
+</div>
+<div class="group relative flex flex-col items-center border border-[#cee8d7] bg-white p-10 text-center transition-all hover:shadow-xl dark:bg-background-dark/30 dark:border-gray-800 border-blue-100">
+<div class="mb-6 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white" style="color: #2463eb;">
+<span class="material-symbols-outlined text-3xl font-bold">commute</span>
+</div>
+<h3 class="text-xl font-800 dark:text-white text-blue-950">Поездка</h3>
+<p class="mt-4 dark:text-gray-400 leading-relaxed font-medium text-slate-600">Легко координируйте действия через наше приложение, отслеживайте поездки в режиме реального времени и значительно сокращайте трафик в районе.</p>
+<div class="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#f0f9f2] text-sm font-bold text-primary" style="color: #2463eb;">3</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Eco-Impact Stats -->
+<section class="py-24 bg-white dark:bg-background-dark/50" id="impact">
+<div class="mx-auto max-w-7xl px-6">
+<div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+<div>
+<h2 class="text-4xl font-800 tracking-tight dark:text-white text-blue-950">Маленькие шаги, большие перемены.</h2>
+<p class="mt-6 text-lg leading-relaxed dark:text-gray-400 font-medium text-slate-600">Наше сообщество лидирует в сфере экологически чистых школьных перевозок. Каждая совместная поездка убирает одну машину с дороги, делая наши улицы безопаснее, а воздух — чище.</p>
+<div class="mt-10 space-y-4">
+<div class="flex items-center gap-4">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary" style="color: #2463eb;">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+</div>
+<span class="font-semibold text-[#0d1c12] dark:text-gray-200">Проверка биографических данных водителей</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary" style="color: #2463eb;">
+<span class="material-symbols-outlined text-sm">location_on</span>
+</div>
+<span class="font-semibold text-[#0d1c12] dark:text-gray-200">GPS-отслеживание поездок в реальном времени</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary" style="color: #2463eb;">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+</div>
+<span class="font-semibold text-[#0d1c12] dark:text-gray-200">Безопасные сообщения в приложении</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2 border border-[#cee8d7] bg-[#f8fcf9] p-8 dark:bg-background-dark/30 dark:border-gray-800 bg-blue-50/50 border-blue-100">
+<span class="material-symbols-outlined text-primary text-3xl" style="color: #2463eb;">cloud_done</span>
+<p class="mt-4 text-3xl font-800 text-[#0d1c12] dark:text-white text-slate-600">1,250</p>
+<p class="text-sm font-bold uppercase tracking-tight font-medium text-slate-600">Тонн CO2 сэкономлено</p>
+<span class="text-xs font-bold text-primary" style="color: #2463eb;">+12.5% в этом месяце</span>
+</div>
+<div class="flex flex-col gap-2 border border-[#cee8d7] bg-[#f8fcf9] p-8 dark:bg-background-dark/30 dark:border-gray-800 bg-blue-50/50 border-blue-100">
+<span class="material-symbols-outlined text-primary text-3xl" style="color: #2463eb;">group</span>
+<p class="mt-4 text-3xl font-800 text-[#0d1c12] dark:text-white text-slate-600">4,800</p>
+<p class="text-sm font-bold uppercase tracking-tight font-medium text-slate-600">Активных групп</p>
+<span class="text-xs font-bold text-primary" style="color: #2463eb;">+18% рост</span>
+</div>
+<div class="flex flex-col gap-2 border border-[#cee8d7] bg-[#f8fcf9] p-8 dark:bg-background-dark/30 dark:border-gray-800 bg-blue-50/50 border-blue-100">
+<span class="material-symbols-outlined text-primary text-3xl" style="color: #2463eb;">school</span>
+<p class="mt-4 text-3xl font-800 text-[#0d1c12] dark:text-white text-slate-600">120</p>
+<p class="text-sm font-bold uppercase tracking-tight font-medium text-slate-600">Школ-партнеров</p>
+<span class="text-xs font-bold text-primary" style="color: #2463eb;">В 12 округах</span>
+</div>
+<div class="flex flex-col gap-2 border border-[#cee8d7] bg-[#f8fcf9] p-8 dark:bg-background-dark/30 dark:border-gray-800 bg-blue-50/50 border-blue-100">
+<span class="material-symbols-outlined text-primary text-3xl" style="color: #2463eb;">handshake</span>
+<p class="mt-4 text-3xl font-800 text-[#0d1c12] dark:text-white text-slate-600">99%</p>
+<p class="text-sm font-bold uppercase tracking-tight font-medium text-slate-600">Рейтинг безопасности</p>
+<span class="text-xs font-bold text-primary" style="color: #2463eb;">Подтверждено родителями</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-24">
+<div class="mx-auto max-w-7xl px-6">
+<div class="relative overflow-hidden rounded-[2.5rem] bg-primary px-8 py-20 text-center shadow-2xl" style="background-color: #2463eb;">
+<!-- Abstract pattern background -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="relative z-10 flex flex-col items-center">
+<h2 class="max-w-3xl text-4xl font-800 tracking-tight sm:text-5xl text-blue-950 text-white">Готовы изменить ваше школьное утро?</h2>
+<p class="mt-6 max-w-xl text-lg font-medium text-slate-600 text-blue-50">Присоединяйтесь к тысячам родителей, которые делают умный, безопасный и экологичный выбор ради будущего своих детей.</p>
+<div class="mt-10 flex flex-col sm:flex-row gap-4">
+<button class="text-white px-10 py-5 text-xl font-800 hover:scale-105 transition-transform text-blue-950">Присоединиться</button>
+<button class="bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-lg text-2xl font-800 hover:bg-white/20 transition-all border-2 border-white">Служба поддержки</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white border-t py-20 dark:bg-background-dark dark:border-gray-800 border-blue-100">
+<div class="mx-auto max-w-7xl px-6">
+<div class="grid gap-12 lg:grid-cols-4">
+<div class="col-span-1 lg:col-span-2">
+<div class="flex items-center gap-2 mb-6">
+<div class="flex h-8 w-8 items-center justify-center rounded bg-primary text-[#0d1c12]" style="background-color: #2463eb;">
+<span class="material-symbols-outlined text-sm font-bold">directions_car</span>
+</div>
+<span class="text-lg font-800 tracking-tight dark:text-white text-blue-950">BIRoad</span>
+</div>
+<p class="max-w-sm dark:text-gray-400 leading-relaxed font-medium text-slate-600">Умный способ организации школьных поездок. Безопасные, проверенные совместные поездки для современных родителей.</p>
+<div class="mt-8 flex gap-4">
+<a class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-primary transition-all dark:bg-gray-800" href="#"><span class="material-symbols-outlined text-xl">public</span></a>
+<a class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-primary transition-all dark:bg-gray-800" href="#"><span class="material-symbols-outlined text-xl">share</span></a>
+<a class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-primary transition-all dark:bg-gray-800" href="#"><span class="material-symbols-outlined text-xl">mail</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-800 dark:text-white mb-6 text-blue-950">Платформа</h4>
+<ul class="space-y-4 text-sm font-semibold text-gray-700 font-bold">
+<li><a class="hover:text-primary transition-colors" href="#">Как это работает</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Протоколы безопасности</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Школьное партнерство</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Цены</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-800 dark:text-white mb-6 text-blue-950">Компания</h4>
+<ul class="space-y-4 text-sm font-semibold text-gray-700 font-bold">
+<li><a class="hover:text-primary transition-colors" href="#">Как это работает</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Протоколы безопасности</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Школьное партнерство</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Цены</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-20 flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100 dark:border-gray-800 gap-4">
+<p class="text-xs font-bold text-gray-400 text-slate-600">© 2024 BIRoad Sustainability Solutions Inc.</p>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#f0f9f2] text-[10px] font-bold uppercase tracking-widest border border-primary/20 text-primary bg-blue-50 border-blue-200" style="color: #2463eb;"><span class="material-symbols-outlined text-[12px]">verified</span> Сертифицированная B-корпорация</div>
+</div>
+</div>
+</footer>
+</body></html>

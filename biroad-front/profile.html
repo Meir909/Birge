@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Профиль пользователя | BIRoad</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "card-border": "#e2e8f0",
+                        "text-main": "#0f172a",
+                        "text-secondary": "#475569"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-card-border bg-white px-6 md:px-20 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-text-main text-xl font-extrabold leading-tight tracking-tight">BIRoad</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-text-main text-sm font-semibold hover:text-primary transition-colors" href="#">Главная</a>
+<a class="text-text-main text-sm font-semibold hover:text-primary transition-colors" href="#">Поездки</a>
+<a class="text-text-main text-sm font-semibold hover:text-primary transition-colors" href="#">Сообщество</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary" href="#">Профиль</a>
+</nav>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Фото профиля пользователя крупным планом" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdJ0Fa7lZ7rrKSot2A5cURZH2AbHezjlD0fclvkBx4QVnbf_SK7jDw0x3pMfBjLYJIuGEai5nhLPdUJEAaiQIh96p1RFAqK0yjLOCg6MsG8HHHSJ1ch_O18odTbdxJTBnEO9LgGf9XUCNTjMz8UsKaBQw8xSdygwM5QDG9-eKSGahT3v2L6rJ91D-jHi20pXwcUf9BLkIv_Dc6mXgKmsnAoGAZOTrLk2_YMF6en0CDff6nCF_EjA689xs-TAGyNgyaHedbp1nqRQE");'></div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-8 px-4 md:px-10 lg:px-20">
+<div class="layout-content-container flex flex-col max-w-[1100px] flex-1 gap-8">
+<!-- Section 1: Personal Data Card -->
+<section class="bg-white rounded-xl border border-card-border p-6 md:p-8 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 border-4 border-primary/10 shadow-lg" data-alt="Мужской портрет для профиля пользователя" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOe8SwwVb1ngVGbqnEr7fj9Ji35qf17wcvo1661rgOm-SGkDwacAqwtZpjN4T3ZxvDiJCBrJ2dBWy0La9ryM4KY_anF-ciIVE0_W4mG4kjvDmCwiyfFrDXAi0yqnawZEOqnD5NqVj5UCTkSNWza9HPxWJjanmEE_Tkgu2hTSEiAuhw5H0LBl3Xj49peM4NmOl7pi7E0FbNsPEDTIPzRSLFYBYdnewdLzuBk4QgINssDzeRCRphc9E7L6890wQeRD_jWDwY3PIfqwY");'></div>
+<span class="absolute bottom-1 right-1 bg-primary text-white p-1 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-sm block">verified_user</span>
+</span>
+</div>
+<div class="flex flex-col justify-center gap-1">
+<h1 class="text-text-main text-2xl md:text-3xl font-extrabold tracking-tight">Иван Иванов</h1>
+<div class="flex items-center gap-2 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<p class="text-base font-medium leading-normal">Лицей №1511, 11 'Б' класс</p>
+</div>
+<div class="mt-2 flex flex-wrap gap-2 justify-center md:justify-start">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Роль: Водитель</span>
+<span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">ID: 48291</span>
+</div>
+</div>
+</div>
+<button class="flex min-w-[180px] cursor-pointer items-center justify-center gap-2 rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-all hover:bg-primary/90 shadow-md">
+<span class="material-symbols-outlined">edit</span>
+<span>Редактировать</span>
+</button>
+</div>
+</section>
+<!-- Section 2: User Statistics -->
+<section>
+<h2 class="text-text-main text-2xl font-extrabold tracking-tight mb-4 px-1">Моя статистика</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white border border-card-border shadow-sm group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">directions_car</span>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Месяц</span>
+</div>
+<p class="text-text-secondary text-sm font-semibold uppercase tracking-wide">Всего поездок</p>
+<p class="text-text-main tracking-tight text-4xl font-extrabold">128</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white border border-card-border shadow-sm group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">eco</span>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Эко-вклад</span>
+</div>
+<p class="text-text-secondary text-sm font-semibold uppercase tracking-wide">Сэкономлено CO2 (кг)</p>
+<p class="text-text-main tracking-tight text-4xl font-extrabold">42.5</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white border border-card-border shadow-sm group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Бонусы</span>
+</div>
+<p class="text-text-secondary text-sm font-semibold uppercase tracking-wide">Баллы сообщества</p>
+<p class="text-text-main tracking-tight text-4xl font-extrabold">1,250</p>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Section 3: Trip History -->
+<div class="lg:col-span-2 flex flex-col gap-4">
+<h2 class="text-text-main text-2xl font-extrabold tracking-tight px-1">История поездок</h2>
+<div class="bg-white rounded-xl border border-card-border overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-card-border">
+<th class="px-6 py-4 text-sm font-bold text-text-secondary uppercase">Дата</th>
+<th class="px-6 py-4 text-sm font-bold text-text-secondary uppercase">Маршрут</th>
+<th class="px-6 py-4 text-sm font-bold text-text-secondary uppercase text-right">Экономия CO2</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-card-border">
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 text-text-main font-medium">12 окт 2023</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-text-main font-semibold">Дом → Лицей</span>
+<span class="text-xs text-text-secondary italic">7.2 км</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-primary font-bold">1.2 кг</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 text-text-main font-medium">11 окт 2023</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-text-main font-semibold">Лицей → Спортивный комплекс</span>
+<span class="text-xs text-text-secondary italic">3.5 км</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-primary font-bold">0.6 кг</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 text-text-main font-medium">11 окт 2023</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-text-main font-semibold">Дом → Лицей</span>
+<span class="text-xs text-text-secondary italic">7.2 км</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-primary font-bold">1.2 кг</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 text-text-main font-medium">10 окт 2023</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-text-main font-semibold">Лицей → Дом</span>
+<span class="text-xs text-text-secondary italic">7.2 км</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-primary font-bold">1.2 кг</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-4 bg-slate-50 text-center">
+<button class="text-primary text-sm font-bold hover:underline">Показать все поездки</button>
+</div>
+</div>
+</div>
+<!-- Section 4: Notification Settings -->
+<div class="flex flex-col gap-4">
+<h2 class="text-text-main text-2xl font-extrabold tracking-tight px-1">Настройки</h2>
+<div class="bg-white rounded-xl border border-card-border p-6 shadow-sm">
+<h3 class="text-sm font-bold text-text-secondary uppercase mb-6 tracking-widest">Уведомления</h3>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-text-main font-bold">Email-отчеты</p>
+<p class="text-xs text-text-secondary">Еженедельная статистика CO2</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-text-main font-bold">Пуш-уведомления</p>
+<p class="text-xs text-text-secondary">Статус текущих поездок</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-text-main font-bold">SMS-оповещения</p>
+<p class="text-xs text-text-secondary">Срочные изменения в маршруте</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-card-border">
+<button class="w-full py-3 px-4 bg-slate-100 text-text-main font-bold rounded-lg hover:bg-slate-200 transition-colors">Сохранить настройки</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-auto py-8 border-t border-card-border bg-white text-center">
+<p class="text-text-secondary text-sm font-medium">© 2023 BIRoad — Совместные поездки для школьников</p>
+</footer>
+</div>
+</div>
+</body></html>

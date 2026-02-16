@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BIRoad - Вход в систему</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="css/animations.css" rel="stylesheet"/>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f5f8fc",
+                        "background-dark": "#0f172a",
+                        "neutral-border": "#e7ebf3",
+                        "neutral-text": "#4d6599",
+                        "text-main": "#0e121b",
+                        "text-muted": "#64748b"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main antialiased">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden p-4">
+<!-- Background Pattern (Decorative) -->
+<div class="fixed inset-0 z-0 opacity-40 pointer-events-none overflow-hidden">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-3xl"></div>
+<div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-3xl"></div>
+</div>
+<!-- Main Auth Container -->
+<div class="relative z-10 w-full max-w-[480px]">
+<!-- Logo Section -->
+<div class="flex flex-col items-center mb-8 scroll-reveal">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined font-bold">directions_car</span>
+</div>
+<span class="text-2xl font-extrabold tracking-tight text-text-main">BIRoad</span>
+</div>
+</div>
+<!-- Login Card -->
+<div class="bg-white dark:bg-[#1a2133] rounded-xl shadow-xl shadow-primary/5 border border-[#e7ebf3] dark:border-primary/10 p-8 md:p-10 fade-in">
+<div class="mb-8 scroll-reveal">
+<h1 class="text-text-main dark:text-white text-3xl font-extrabold leading-tight tracking-tight mb-2">Вход в систему</h1>
+<p class="text-neutral-text text-base">Введите данные для доступа к платформе</p>
+</div>
+<div class="space-y-6">
+<!-- Phone Input Group -->
+<div class="flex flex-col gap-2 scroll-reveal">
+<label class="text-text-main dark:text-gray-200 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">phone_iphone</span>
+                            Номер телефона
+                        </label>
+<div class="relative flex items-center">
+<div class="absolute left-4 flex items-center gap-2 pr-2 border-r border-neutral-border dark:border-gray-600">
+<span class="text-text-main dark:text-white font-medium">+7</span>
+</div>
+<input class="flex w-full rounded-lg border-neutral-border bg-background-light/50 dark:bg-background-dark py-4 pl-16 pr-4 text-text-main dark:text-white placeholder:text-neutral-text focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-lg form-input" placeholder="(___) ___-__-__" type="tel"/>
+</div>
+</div>
+<!-- Get Code Action -->
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 get-code-btn btn-hover">
+<span>Получить код</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center gap-4 py-2">
+<div class="h-px grow bg-neutral-border dark:bg-gray-700"></div>
+<span class="text-xs font-bold text-neutral-text uppercase tracking-widest">Проверка</span>
+<div class="h-px grow bg-neutral-border dark:bg-gray-700"></div>
+</div>
+<!-- SMS Code Group -->
+<div class="flex flex-col gap-2 sms-section scroll-reveal" style="display: none;">
+<label class="text-text-main dark:text-gray-200 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">sms</span>
+                            Введите код из SMS
+                        </label>
+<input class="flex w-full tracking-[1em] text-center rounded-lg border-neutral-border bg-background-light/50 dark:bg-background-dark py-4 text-text-main dark:text-white placeholder:text-neutral-text focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-xl font-bold form-input" maxlength="6" placeholder="••••••" type="text"/>
+</div>
+<!-- Login Button -->
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 login-btn btn-hover">
+<span class="material-symbols-outlined">login</span>
+<span>Войти</span>
+</button>
+</div>
+<!-- Footer Security Message -->
+<div class="mt-8 pt-6 border-t border-neutral-border dark:border-gray-700 flex items-center justify-center gap-2 text-neutral-text dark:text-gray-400">
+<span class="material-symbols-outlined text-lg">shield_lock</span>
+<span class="text-sm font-medium">Безопасное соединение</span>
+</div>
+</div>
+<!-- Additional Help Links -->
+<div class="mt-8 text-center scroll-reveal">
+<p class="text-neutral-text dark:text-gray-400 text-sm">
+                    Проблемы со входом? 
+                    <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4 ml-1" href="#">Связаться с поддержкой</a>
+</p>
+<p class="text-neutral-text dark:text-gray-400 text-sm mt-2">
+                    <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4" href="rega.html">Зарегистрироваться</a>
+</p>
+</div>
+<!-- Copyright / Footer -->
+<footer class="mt-12 text-center text-neutral-text/60 dark:text-gray-500 text-xs">
+                &copy; 2024 BIRoad Platform. Все права защищены.
+            </footer>
+</div>
+</div>
+</body></html>

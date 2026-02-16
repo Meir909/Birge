@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BIRoad - Настройки</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "neutral-soft": "#f8f9fc",
+                        "border-soft": "#e7ebf3",
+                        "text-main": "#0e121b",
+                        "text-muted": "#4d6599",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: #e7ebf3;
+            color: #2463eb;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-soft bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined">route</span>
+</div>
+<h2 class="text-text-main dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">BIRoad</h2>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-neutral-soft dark:bg-white/10 text-text-main dark:text-white hover:bg-border-soft transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-neutral-soft dark:bg-white/10 text-text-main dark:text-white hover:bg-border-soft transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 flex-col md:flex-row max-w-[1440px] mx-auto w-full px-4 md:px-10 py-8 gap-8">
+<!-- Sidebar Navigation -->
+<aside class="w-full md:w-72 flex flex-col gap-2">
+<div class="mb-4">
+<h1 class="text-2xl font-extrabold text-text-main dark:text-white">Настройки</h1>
+<p class="text-text-muted dark:text-text-muted/80 text-sm">Управляйте своим профилем и системой</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="active-nav flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-semibold" href="#account">
+<span class="material-symbols-outlined">person</span>
+<span>Аккаунт</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted dark:text-white/70 hover:bg-neutral-soft dark:hover:bg-white/5 rounded-xl transition-all font-medium" href="#privacy">
+<span class="material-symbols-outlined">shield</span>
+<span>Безопасность</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted dark:text-white/70 hover:bg-neutral-soft dark:hover:bg-white/5 rounded-xl transition-all font-medium" href="#notifications">
+<span class="material-symbols-outlined">notifications_active</span>
+<span>Уведомления</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted dark:text-white/70 hover:bg-neutral-soft dark:hover:bg-white/5 rounded-xl transition-all font-medium" href="#payments">
+<span class="material-symbols-outlined">credit_card</span>
+<span>Оплата</span>
+</a>
+</nav>
+<div class="mt-8 pt-8 border-t border-border-soft dark:border-white/10">
+<button class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all w-full font-medium">
+<span class="material-symbols-outlined">logout</span>
+<span>Выйти из системы</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col gap-10">
+<!-- Account Settings Section -->
+<section class="bg-white dark:bg-background-dark/50 p-6 md:p-8 rounded-2xl border border-border-soft dark:border-white/10 shadow-sm" id="account">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">manage_accounts</span>
+<h3 class="text-xl font-bold">Настройки аккаунта</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Полное имя</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="Александр Иванов"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Телефон</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="tel" value="+7 (999) 000-00-00"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Email</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="email" value="alexander.ivanov@mail.ru"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Школа / Учебное заведение</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="Лицей №15"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Класс / Курс</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="11 'Б'"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main dark:text-white/90">Район</label>
+<input class="rounded-xl border-border-soft bg-neutral-soft dark:bg-white/5 focus:ring-primary focus:border-primary h-12 px-4" type="text" value="Центральный"/>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md shadow-primary/20">
+                            Сохранить изменения
+                        </button>
+</div>
+</section>
+<!-- Privacy & Security Section -->
+<section class="bg-white dark:bg-background-dark/50 p-6 md:p-8 rounded-2xl border border-border-soft dark:border-white/10 shadow-sm" id="privacy">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">security</span>
+<h3 class="text-xl font-bold">Конфиденциальность и Безопасность</h3>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between py-4 border-b border-border-soft dark:border-white/10">
+<div>
+<p class="font-bold">Видимость профиля</p>
+<p class="text-sm text-text-muted dark:text-text-muted/80">Разрешить другим пользователям видеть ваш прогресс</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between py-4 border-b border-border-soft dark:border-white/10">
+<div>
+<p class="font-bold">Двухфакторная аутентификация</p>
+<p class="text-sm text-text-muted dark:text-text-muted/80">Дополнительный уровень защиты вашего аккаунта</p>
+</div>
+<button class="px-4 py-2 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary/5 transition-colors">
+                                Настроить
+                            </button>
+</div>
+<div class="flex items-center justify-between py-4">
+<div>
+<p class="font-bold">Управление данными</p>
+<p class="text-sm text-text-muted dark:text-text-muted/80">Скачайте архив ваших данных или удалите аккаунт</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-neutral-soft dark:bg-white/10 text-text-main dark:text-white rounded-lg font-semibold text-sm">Экспорт</button>
+<button class="px-4 py-2 text-red-500 font-semibold text-sm hover:underline">Удалить данные</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Notifications Section -->
+<section class="bg-white dark:bg-background-dark/50 p-6 md:p-8 rounded-2xl border border-border-soft dark:border-white/10 shadow-sm" id="notifications">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h3 class="text-xl font-bold">Уведомления</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-4 rounded-xl border border-border-soft dark:border-white/10 bg-neutral-soft dark:bg-white/5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary p-2 bg-white dark:bg-background-dark rounded-lg">mail</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-bold text-lg">Email отчеты</p>
+<p class="text-sm text-text-muted">Еженедельная статистика и важные обновления</p>
+</div>
+<div class="p-4 rounded-xl border border-border-soft dark:border-white/10 bg-neutral-soft dark:bg-white/5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary p-2 bg-white dark:bg-background-dark rounded-lg">smartphone</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-bold text-lg">Push-уведомления</p>
+<p class="text-sm text-text-muted">Мгновенные оповещения в браузере и приложении</p>
+</div>
+<div class="p-4 rounded-xl border border-border-soft dark:border-white/10 bg-neutral-soft dark:bg-white/5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary p-2 bg-white dark:bg-background-dark rounded-lg">sms</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-bold text-lg">SMS алерты</p>
+<p class="text-sm text-text-muted">Критические уведомления через SMS-сообщения</p>
+</div>
+</div>
+</section>
+<!-- Payment Methods Section -->
+<section class="bg-white dark:bg-background-dark/50 p-6 md:p-8 rounded-2xl border border-border-soft dark:border-white/10 shadow-sm mb-12" id="payments">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+<h3 class="text-xl font-bold">Способы оплаты</h3>
+</div>
+<button class="flex items-center gap-2 bg-neutral-soft dark:bg-white/10 px-4 py-2 rounded-lg font-bold hover:bg-border-soft transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                            Добавить карту
+                        </button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Saved Card -->
+<div class="flex items-center justify-between p-5 rounded-xl border border-border-soft dark:border-white/10 bg-white dark:bg-white/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-neutral-soft dark:bg-background-dark rounded flex items-center justify-center border border-border-soft dark:border-white/10">
+<span class="text-[10px] font-black italic">VISA</span>
+</div>
+<div>
+<p class="font-bold">Visa Classic •••• 4242</p>
+<p class="text-xs text-text-muted">Истекает 12/26</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-1 rounded font-bold uppercase self-center">Основная</span>
+<button class="text-text-muted hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Payment History Placeholder -->
+<div class="mt-8 border-t border-border-soft dark:border-white/10 pt-6">
+<h4 class="font-bold mb-4">История транзакций</h4>
+<div class="overflow-hidden rounded-xl border border-border-soft dark:border-white/10">
+<table class="w-full text-left">
+<thead class="bg-neutral-soft dark:bg-white/5 text-sm uppercase text-text-muted">
+<tr>
+<th class="px-6 py-3">Дата</th>
+<th class="px-6 py-3">Услуга</th>
+<th class="px-6 py-3 text-right">Сумма</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-soft dark:divide-white/10">
+<tr>
+<td class="px-6 py-4 text-sm">12 Окт 2023</td>
+<td class="px-6 py-4 text-sm font-medium">Подписка BIRoad Pro (1 месяц)</td>
+<td class="px-6 py-4 text-sm font-bold text-right">990 ₽</td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-sm">12 Сен 2023</td>
+<td class="px-6 py-4 text-sm font-medium">Подписка BIRoad Pro (1 месяц)</td>
+<td class="px-6 py-4 text-sm font-bold text-right">990 ₽</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer Footer -->
+<footer class="mt-auto border-t border-border-soft dark:border-white/10 bg-white dark:bg-background-dark py-6 px-10 text-center text-text-muted text-sm">
+<p>© 2024 BIRoad. Все права защищены. Сделано для образования.</p>
+</footer>
+</div>
+</body></html>

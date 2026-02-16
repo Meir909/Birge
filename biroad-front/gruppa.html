@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Управление группой - Карпул</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="js/main.js"></script>
+<script src="js/group.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f5f8fc",
+                        "background-dark": "#0f172a",
+                        "neutral-border": "#e7ebf3",
+                        "neutral-text": "#4d6599",
+                        "text-main": "#0e121b",
+                        "text-muted": "#64748b"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] bg-white px-10 py-3">
+<div class="flex items-center gap-4 text-text-main">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight text-text-main">Карпул-Хаб</h2>
+</div>
+<div class="flex flex-1 justify-center gap-8">
+<a class="text-sm font-medium text-text-main" href="#">Главная</a>
+<a class="text-sm font-semibold text-primary border-b-2 border-primary" href="#">Группы</a>
+<a class="text-sm font-medium text-text-main" href="#">Мои поездки</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex size-10 items-center justify-center rounded-lg bg-neutral-border hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-primary/20">
+<img class="h-full w-full object-cover" data-alt="User profile avatar of a parent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHsqqpjWW2y2IYhMAEHNYvcRM4zvHdqS-rrJTdjtc90rMVYool_JsY_dclUrxCcsRWMbvcZAV-Xn-o6iQXm02JOJssyuLAXWj8WxX5XwSv5uX-5tlUGSVAxxpFN77LyJGMBTetziE7qipPKc3EoS-J6R-pQbZQ-QETJM8tSKnmVe6cf-DsPJVophVMZVLQ60BIUTBc-Hr8FBmxSAfTP8Hwf4horlidTZ8bpe9xsLlNOHumj5SdN_txo8OQUOlR5kw57qybtdDLZEU"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="mx-auto flex w-full max-w-[1440px] flex-1 flex-col p-6">
+<!-- Breadcrumbs & Header Actions -->
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-sm text-slate-500">
+<span class="text-text-main font-medium">Главная</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-text-main font-medium">Группы</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-text-main font-medium">Лицей №15</span>
+</div>
+<h1 class="text-3xl font-black tracking-tight text-text-main">Группа: Лицей №15</h1>
+<p class="text-neutral-text">Управление участниками, расписанием и маршрутом</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex h-11 items-center justify-center rounded-lg border border-red-200 bg-red-50 px-6 text-sm font-bold text-red-600 hover:bg-red-100 transition-colors px-8 text-base logout-btn">
+<span class="material-symbols-outlined mr-2 text-[18px]">logout</span>
+                    Покинуть группу
+                </button>
+<button class="flex h-11 items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-blue-700 transition-colors px-8 text-base invite-btn">
+<span class="material-symbols-outlined mr-2 text-[18px]">person_add</span>
+                    Пригласить родителя
+                </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left: Members List -->
+<div class="col-span-3 flex flex-col gap-4">
+<div class="rounded-xl bg-white p-5 shadow-sm border border-slate-100">
+<div class="mb-4 flex items-center justify-between">
+<h3 class="font-bold text-lg">Участники (6)</h3>
+<span class="material-symbols-outlined text-slate-400">group</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Member Card -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-background-light/50 transition-colors cursor-pointer">
+<img class="size-10 rounded-full object-cover ring-2 ring-primary/10" data-alt="Avatar of Anna Petrova" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWHdL_qPKmxE9kHx5sEJI9-aQoRutqn3NF7_8xZNLNzGK3uYUStRJ9BSvxCQaiR6eON9IfK-McMRP5FpnNNJw60x-x0remvclI_wvhjtAHJe3nw-Vk_Cvm-MVQYg10V43PV_O34YOMgtIC8ragLrdW_Pl8Kjoz2kS0chet-WrfEsLiva20FqUVpp4ia0ysM8nDzfQkudGBg935fVwctBC97iBHrY-C6uZNzvCitRgy4-rbx8FBLn_h9jkAGfomh4ri7Ioz30EWyhQ"/>
+<div>
+<p class="text-sm font-bold text-primary">Анна Петрова</p>
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary">Админ • Водитель</span>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-background-light/50 transition-colors cursor-pointer">
+<img class="size-10 rounded-full object-cover ring-2 ring-slate-100" data-alt="Avatar of Ivan Sidorov" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9KY6xZeft0ARgVy0ZINNqIB6xyafMnmn5aDB-G-tmLFbSRRLrYOJh7P3N_0q0W3xVHiZYUY7Sd1pbX-DM66nhiVGRN5d73rXyj1S01CX8ER4GBWlPjjQT9Po46QpW3ufNfZqY-xilsl3CodkuxootNFGe08deMvzF_KJu_bSNWWfNiO9HeHGCRqapiMB5dY8JvnwfYqBGs2XWj6YFqbEo2O9KBuE3cROnq-bSgQQO2DsCBTAWJM4wb7HkybKPm0MH6HivftvSr6U"/>
+<div>
+<p class="text-sm font-bold text-primary">Иван Сидоров</p>
+<span class="text-[11px] font-bold uppercase tracking-wider text-neutral-text">Родитель</span>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-background-light/50 transition-colors cursor-pointer">
+<img class="size-10 rounded-full object-cover ring-2 ring-slate-100" data-alt="Avatar of Elena Volkova" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAldp67t9hL0V4c6_KqjkOoy79Adk-mFX-ZECg89ZOwRIr1VdwdQSTZcfJrzLfx44uoxph3w9kwM3gq1NTBaI3maf94Bbz4sbf1FcfEzhAX2w4cm8V6lPmrHSkuIAwZ4b_gaNs2Z98Ld-iySbA4CJlNiIl6txQnuTkzYUbBlBcd1w3lW6oGlT96nb1j8308qiqfIm3gVYujuYdABuh5KahwwQAsGwNh6g5aHdqyzXT7J4-Yeley7DEYh5FJs2ZHi2ze_QNBk9XWnrI"/>
+<div>
+<p class="text-sm font-bold text-primary">Елена Волкова</p>
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary">Водитель</span>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-background-light/50 transition-colors cursor-pointer">
+<img class="size-10 rounded-full object-cover ring-2 ring-slate-100" data-alt="Avatar of Dmitry Morozov" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEzPPpVi-2IczqZSIt05jY3kopKNoo8yj4hS97uLY-v-y59QvDHP2Txeb9Ob9UV77Ecis7s62QEgL7-NwjflRpiz8QYsMSHPwrTcT4TJIpNCTLtyqlmqbIGIwlrNmKRwqLExNP2a46bNVV13kjdlYb4MYUwRGepodsnZ6y4tYd6nPjiH9d5VWAJrp2HGD80qqZUz7fUQH4JhvFV-zWuLWdJo25_Iaexb0Nt-tTKcSdJ9gVUVypYeR-W-vCMGA7d3tVGgtOq-SsEz4"/>
+<div>
+<p class="text-sm font-bold text-primary">Дмитрий Морозов</p>
+<span class="text-[11px] font-bold uppercase tracking-wider text-neutral-text">Родитель</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats/Info Card -->
+<div class="rounded-xl bg-primary p-5 text-white shadow-lg shadow-primary/20">
+<p class="text-xs font-bold uppercase tracking-widest opacity-80">Сегодня в пути</p>
+<div class="mt-4 flex items-center justify-between">
+<div>
+<p class="text-2xl font-black">15:45</p>
+<p class="text-sm">Выезд из школы</p>
+</div>
+<div class="flex size-12 items-center justify-center rounded-full bg-white/20">
+<span class="material-symbols-outlined text-[28px]">directions_car</span>
+</div>
+</div>
+<div class="mt-4 h-1.5 w-full rounded-full bg-white/20 overflow-hidden">
+<div class="h-full w-2/3 bg-white"></div>
+</div>
+<p class="mt-2 text-xs font-medium">Елена Волкова (2 остановки осталось)</p>
+</div>
+</div>
+<!-- Center: Schedule and Map -->
+<div class="col-span-6 flex flex-col gap-6">
+<!-- Weekly Schedule -->
+<div class="rounded-xl bg-white p-5 shadow-sm border border-slate-100">
+<h3 class="mb-4 font-bold text-lg">Расписание на неделю</h3>
+<div class="grid grid-cols-5 gap-2" id="schedule-grid">
+<!-- Day Columns -->
+<div class="flex flex-col items-center rounded-lg border border-neutral-border bg-background-light/50 p-2">
+<span class="text-xs font-bold text-primary">ПН</span>
+<div class="mt-2 size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<p class="mt-2 text-[10px] text-center font-bold text-primary">Анна П.</p>
+</div>
+<div class="flex flex-col items-center rounded-lg border-2 border-primary bg-white p-2 shadow-sm">
+<span class="text-xs font-bold text-primary">ВТ</span>
+<div class="mt-2 size-8 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<p class="mt-2 text-[10px] text-center font-bold text-primary">Елена В.</p>
+<span class="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-green-500"></span>
+</div>
+<div class="flex flex-col items-center rounded-lg border border-neutral-border bg-background-light/50 p-2">
+<span class="text-xs font-bold text-primary">СР</span>
+<div class="mt-2 size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<p class="mt-2 text-[10px] text-center font-bold text-primary">Дмитрий М.</p>
+</div>
+<div class="flex flex-col items-center rounded-lg border border-neutral-border bg-background-light/50 p-2">
+<span class="text-xs font-bold text-primary">ЧТ</span>
+<div class="mt-2 size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<p class="mt-2 text-[10px] text-center font-bold text-primary">Иван С.</p>
+</div>
+<div class="flex flex-col items-center rounded-lg border border-neutral-border bg-background-light/50 p-2">
+<span class="text-xs font-bold text-primary">ПТ</span>
+<div class="mt-2 size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<p class="mt-2 text-[10px] text-center font-bold text-primary">Анна П.</p>
+</div>
+</div>
+</div>
+<!-- Route Map -->
+<div class="relative overflow-hidden rounded-xl bg-white shadow-sm border border-neutral-border h-[420px]">
+<div class="absolute left-4 top-4 z-10 rounded-lg bg-white/95 px-3 py-2 shadow-md backdrop-blur-sm border border-neutral-border">
+<p class="text-xs font-bold text-slate-500 uppercase">Текущий маршрут</p>
+<p class="text-sm font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">navigation</span>
+                            Лицей №15 → ЖК "Светлый"
+                        </p>
+</div>
+<!-- Mock Map Background -->
+<div class="h-full w-full bg-slate-200" data-location="Moscow" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsd5FoVGdqn5lhps20cFvLx9wCHYR2YiHQpqiYsGd2hnLvmQDNQLcTIBxKvpn536Z_cbOIM4waGooDDwiWQcLmoBAx8y9DNyzN6HE-b-yFrPK1QPwbGVb4x-poCZ_lrTlq1x7DCVMpo7rbf2RPc9VYzYIch1eDdAf3IFLAgIJ4CwVz2zG_fbNFqSR9ucAnfQeLarF3ldp2fPaFkchUUGuMXBHkgFTQ4fw2Y6-j_vp8aXiS4ch--UND6SdF-DkdA0Uex5wmNZ7AVvg'); background-size: cover; background-position: center;">
+<!-- Map Marker 1 (Start) -->
+<div class="absolute left-1/4 top-1/3 flex flex-col items-center">
+<div class="rounded-full bg-primary p-1.5 text-white ring-4 ring-primary/20">
+<span class="material-symbols-outlined text-[16px]">school</span>
+</div>
+<span class="mt-1 rounded bg-white px-1.5 py-0.5 text-[9px] font-bold shadow-sm">Лицей №15</span>
+</div>
+<!-- Route Line SVG -->
+<svg class="absolute inset-0 h-full w-full pointer-events-none">
+<path d="M200,200 Q300,180 400,280 T550,320" fill="none" stroke="#2463eb" stroke-dasharray="8 4" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<!-- Car Marker -->
+<div class="absolute left-[380px] top-[260px] z-20 flex flex-col items-center">
+<div class="rounded-full bg-white p-2 text-primary shadow-xl ring-2 ring-primary">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</div>
+</div>
+<!-- Map Marker 2 (End) -->
+<div class="absolute right-[150px] bottom-[100px] flex flex-col items-center">
+<div class="rounded-full p-1.5 text-white ring-4 bg-primary ring-primary/20">
+<span class="material-symbols-outlined text-[16px]">home</span>
+</div>
+<span class="mt-1 rounded bg-white px-1.5 py-0.5 text-[9px] font-bold shadow-sm">ЖК "Светлый"</span>
+</div>
+</div>
+<!-- Zoom Controls -->
+<div class="absolute right-4 bottom-4 flex flex-col gap-2">
+<button class="flex size-9 items-center justify-center rounded bg-white shadow hover:bg-slate-50"><span class="material-symbols-outlined">add</span></button>
+<button class="flex size-9 items-center justify-center rounded bg-white shadow hover:bg-slate-50"><span class="material-symbols-outlined">remove</span></button>
+</div>
+</div>
+</div>
+<!-- Right: Group Chat -->
+<div class="col-span-3 flex flex-col h-[650px] rounded-xl bg-white shadow-sm border border-neutral-border overflow-hidden">
+<div class="border-b border-neutral-border bg-background-light/50 p-4">
+<h3 class="font-bold">Чат группы</h3>
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+<span class="text-xs text-slate-500">3 в сети</span>
+</div>
+</div>
+<!-- Chat Messages Area -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Received Message -->
+<div class="flex items-end gap-2">
+<img class="size-8 rounded-full border border-slate-200" data-alt="Ivan Sidorov avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFUBfb5Oc7s_VSTsHZp7cV4PzKWk_YHjZAQmSkWX9nJgUXIbj-n3a5iVodDpR7Gp9RLdybwya9O6ubD0-ewQxWRz0cTF4yhCA2GYK-X_f3y0pyXsxYTB-giqsk1cLYDo_vnVGcdUZdZ4-fyC_2kL_49IXWOTVcVqW2pBFlrO4WhtA9vSkpzFn9vt6XwpN84FS3_CjCe_ZHNF8hjsodTS5m9NutMhBuHHTUX9RrlraUcjkMQEjye3lFoRlLbM0l8nXG0wxU1hGRGFU"/>
+<div class="flex max-w-[85%] flex-col">
+<span class="ml-1 text-[10px] font-bold text-primary">Иван</span>
+<div class="rounded-2xl rounded-bl-none bg-slate-100 p-3 text-sm text-slate-800 chat-message-text">
+                                Мы будем вовремя сегодня! 👍
+                            </div>
+<span class="mt-1 text-[9px] text-slate-400">10:15</span>
+</div>
+</div>
+<!-- Sent Message -->
+<div class="flex flex-col items-end">
+<div class="flex max-w-[85%] flex-col items-end">
+<div class="rounded-2xl rounded-br-none bg-primary p-3 text-sm text-white chat-message-text">
+                                Отлично, спасибо что предупредили!
+                            </div>
+<div class="mt-1 flex items-center gap-1">
+<span class="text-[9px] text-slate-400">10:18</span>
+<span class="material-symbols-outlined text-[12px] text-primary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Driver Broadcast -->
+<div class="mx-auto rounded-full bg-slate-50 px-4 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-tighter">
+                        Елена выехала из школы
+                    </div>
+<!-- Received Message -->
+<div class="flex items-end gap-2">
+<img class="size-8 rounded-full border border-slate-200" data-alt="Elena Volkova avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9nGQ2ep-VaSpwYYxuNqg6uZlShzkobhjtX2p8XCTLszo2h49pUqjdf7gIbcL1J03-lNQafTIpF9P9MKm-jYZUSyDN6udDrUmoKNzTzwvzo0ByC44FaBh-VfeXatV3rIjlrpyNmolXCnwVOTEibtBB9hmcxrawj1LosNYvVz0Woi27laIkmuZmf7iPMoE3S0ZX0SjTftYeiL08mxkM-vLvM6E0NIF1WCMAvnSDrjaia8ROOJ5vWBuSD3lqAlARw9RiqKdwE9J-E48"/>
+<div class="flex max-w-[85%] flex-col">
+<span class="ml-1 text-[10px] font-bold text-primary">Елена (Водитель)</span>
+<div class="rounded-2xl rounded-bl-none bg-slate-100 p-3 text-sm text-slate-800 chat-message-text">
+                                Пробки на Проспекте Мира, задержимся на 5 минут.
+                            </div>
+<span class="mt-1 text-[9px] text-slate-400">15:52</span>
+</div>
+</div>
+</div>
+<!-- Chat Input Area -->
+<div class="border-t border-neutral-border p-4">
+<div class="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-1 border border-slate-200 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">add_circle</span></button>
+<input class="w-full border-none bg-transparent p-2 text-sm focus:ring-0 placeholder:text-neutral-text" placeholder="Напишите сообщение..." type="text"/>
+<button class="flex size-8 items-center justify-center rounded-lg bg-primary text-white hover:bg-blue-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Information -->
+<footer class="mt-12 border-t border-neutral-border bg-white py-8">
+<div class="mx-auto max-w-[1440px] px-6 flex justify-between items-center text-slate-400 text-sm">
+<div class="flex items-center gap-4">
+<p> 2024 Система школьных карпулов</p>
+<a class="hover:text-primary underline-offset-4 hover:underline" href="#">Правила безопасности</a>
+<a class="hover:text-primary underline-offset-4 hover:underline" href="#">Поддержка</a>
+</div>
+<div class="flex gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">lock</span> Все данные защищены</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

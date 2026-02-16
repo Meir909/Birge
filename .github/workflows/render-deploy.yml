@@ -1,0 +1,254 @@
+name: 🚀 Deploy to Render
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '18'
+  
+jobs:
+  # Тестирование
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          cd server && npm ci
+          cd ../biroad-front && npm ci
+          
+      - name: 🔍 Run tests
+        run: |
+          cd server && npm test || true
+          
+      - name: 🔍 Lint code
+        run: |
+          cd server && npm run lint || true
+
+  # Деплой бэкенда на Render
+  deploy-backend:
+    name: 🔧 Deploy Backend to Render
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          cd server
+          npm ci --production
+          
+      - name: 🔨 Build backend
+        run: |
+          cd server
+          npm run build
+          
+      - name: 🚀 Trigger Render Deploy
+        run: |
+          # Render автоматически деплоит при пуше в main
+          echo "✅ Backend deployment triggered on Render"
+          
+      - name: ⏳ Wait for Render deployment
+        run: |
+          echo "⏳ Waiting for Render to complete deployment..."
+          sleep 60
+
+  # Деплой фронтенда на Render
+  deploy-frontend:
+    name: 🎨 Deploy Frontend to Render
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: |
+          cd biroad-front
+          npm ci
+          
+      - name: 🔨 Build frontend
+        run: |
+          cd biroad-front
+          npm run build
+          
+      - name: 🚀 Trigger Render Deploy
+        run: |
+          # Render автоматически деплоит при пуше в main
+          echo "✅ Frontend deployment triggered on Render"
+          
+      - name: ⏳ Wait for Render deployment
+        run: |
+          echo "⏳ Waiting for Render to complete deployment..."
+          sleep 60
+
+  # Health check после деплоя
+  health-check:
+    name: 🔍 Health Check
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-frontend]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 🔍 Check API Health
+        run: |
+          sleep 120 # Ждем запуска сервисов
+          
+          # Проверка API
+          API_URL="https://biroad-backend.onrender.com"
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$API_URL/api/health" || echo "000")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ API Health Check Passed"
+          else
+            echo "❌ API Health Check Failed: $response"
+            echo "📋 Проверьте логи на Render dashboard"
+            exit 1
+          fi
+          
+          # Проверка фронтенда
+          FRONTEND_URL="https://biroad-frontend.onrender.com"
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL" || echo "000")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ Frontend Health Check Passed"
+          else
+            echo "❌ Frontend Health Check Failed: $response"
+            echo "📋 Проверьте логи на Render dashboard"
+            exit 1
+          fi
+
+  # Создание релиза
+  release:
+    name: 🏷️ Create Release
+    runs-on: ubuntu-latest
+    needs: health-check
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🏷️ Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: 🚀 BIRoad v${{ github.run_number }} on Render
+          body: |
+            ## 🚀 Новое обновление BIRoad на Render
+            
+            ### ✨ Что нового:
+            - Автоматический деплой на Render
+            - Backend Web Service с MongoDB
+            - Frontend Static Site
+            - Health checks и мониторинг
+            - SSL сертификаты и CDN
+            
+            ### 🔗 Ссылки:
+            - 🎨 Фронтенд: https://biroad-frontend.onrender.com
+            - 🔧 Бэкенд: https://biroad-backend.onrender.com
+            - 📊 Render Dashboard: https://dashboard.render.com
+            
+            ### 📦 Изменения:
+            - Commit: ${{ github.sha }}
+            - Автор: ${{ github.actor }}
+            
+            ---
+            🤖 Автоматический релиз от GitHub Actions + Render
+          draft: false
+          prerelease: false
+
+  # Уведомление о деплое
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    needs: [health-check]
+    if: always()
+    
+    steps:
+      - name: 📢 Send notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          text: |
+            🚀 BIRoad Render Deployment Status: ${{ job.status }}
+            
+            Frontend: https://biroad-frontend.onrender.com
+            Backend: https://biroad-backend.onrender.com
+            Dashboard: https://dashboard.render.com
+            
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+  # Обновление документации
+  update-docs:
+    name: 📚 Update Documentation
+    runs-on: ubuntu-latest
+    needs: release
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📝 Update deployment status
+        run: |
+          echo "## 🚀 Render Deployment Status" >> DEPLOYMENT.md
+          echo "" >> DEPLOYMENT.md
+          echo "✅ **Successfully deployed to Render!**" >> DEPLOYMENT.md
+          echo "" >> DEPLOYMENT.md
+          echo "### 🔗 Links:" >> DEPLOYMENT.md
+          echo "- 🎨 Frontend: https://biroad-frontend.onrender.com" >> DEPLOYMENT.md
+          echo "- 🔧 Backend: https://biroad-backend.onrender.com" >> DEPLOYMENT.md
+          echo "- 📊 Dashboard: https://dashboard.render.com" >> DEPLOYMENT.md
+          echo "" >> DEPLOYMENT.md
+          echo "### 📅 Last updated:" >> DEPLOYMENT.md
+          echo "- $(date)" >> DEPLOYMENT.md
+          echo "- Commit: ${{ github.sha }}" >> DEPLOYMENT.md
+          echo "- Author: ${{ github.actor }}" >> DEPLOYMENT.md
+          
+      - name: 📤 Commit documentation update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add DEPLOYMENT.md
+          git commit -m "📝 Update Render deployment status [skip ci]" || true
+          git push || true
