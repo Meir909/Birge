@@ -13,16 +13,13 @@ const io = socketIo(server, {
   }
 });
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Базовый маршрут для проверки
 app.get('/api/health', (req, res) => {
   res.json({ status: 'BIRoad backend is running!', timestamp: new Date().toISOString() });
 });
 
-// Routes
 app.use('/api/auth', require('./src/routes/auth'));
 app.use('/api/users', require('./src/routes/users'));
 app.use('/api/rides', require('./src/routes/rides'));
@@ -31,7 +28,6 @@ app.use('/api/sos', require('./src/routes/sos'));
 app.use('/api/ai', require('./src/routes/ai'));
 app.use('/api/chatbot', require('./src/routes/chatbot'));
 
-// Socket.io для real-time отслеживания
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
   
@@ -51,6 +47,6 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 3002;
 server.listen(PORT, () => {
-  console.log(`🚀 BIRoad backend running on port ${PORT}`);
-  console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`BIRoad backend running on port ${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/api/health`);
 });
