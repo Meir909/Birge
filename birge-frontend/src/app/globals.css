@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-inter text-dark bg-light-gray;
+        font-size: 16px;
+    }
+
+    h1 {
+        @apply text-[32px] font-bold;
+    }
+
+    h2 {
+        @apply text-[24px] font-bold;
+    }
+
+    h3 {
+        @apply text-[20px] font-bold;
+    }
+
+    h4 {
+        @apply text-[18px] font-bold;
+    }
+
+    p {
+        @apply text-[16px] leading-relaxed;
+    }
+
+    .text-small {
+        @apply text-[14px];
+    }
+
+    .text-caption {
+        @apply text-[12px] font-medium;
+    }
+}
+
+@layer components {
+    .container-custom {
+        @apply max-w-[1440px] mx-auto px-4 md:px-8;
+    }
+}
