@@ -11,7 +11,7 @@ WORKDIR /app
 COPY birge-backend/package*.json ./
 
 # Install backend dependencies
-RUN npm install --only=production --no-optional && npm cache clean --force
+RUN npm install && npm cache clean --force
 
 # Copy source code
 COPY birge-backend/. .
