@@ -10,11 +10,11 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install backend dependencies
-RUN npm install --only=production --no-optional && npm cache clean --force
-
 # Copy source code
 COPY . .
+
+# Install backend dependencies
+RUN npm install --only=production --no-optional && npm cache clean --force
 
 # Build the application
 RUN npm run build
