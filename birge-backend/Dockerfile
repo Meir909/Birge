@@ -7,14 +7,14 @@ RUN apk add --no-cache python3 make g++
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package files from the correct location
+COPY birge-backend/package*.json ./
 
 # Install backend dependencies
 RUN npm install --only=production --no-optional && npm cache clean --force
 
 # Copy source code
-COPY . .
+COPY birge-backend/. .
 
 # Build the application
 RUN npm run build
