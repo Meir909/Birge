@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install backend dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --only=production --no-optional && npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -29,7 +29,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --only=production --no-optional && npm cache clean --force
 
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
