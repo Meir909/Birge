@@ -26,7 +26,7 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY --from=builder /app/package*.json ./
 
 # Install only production dependencies
 RUN npm install --only=production --no-optional && npm cache clean --force
